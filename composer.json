@@ -1,0 +1,28 @@
+{
+    "name": "gavan4eg/laravel-cashalot",
+    "description": "Пакет для работы с ПРРО по API",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "gavan4eg",
+            "email": "djmalooy@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gavan4eg\\Cashalot\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Gavan4eg\\Cashalot\\Providers\\CashalotServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
