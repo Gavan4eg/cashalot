@@ -28,7 +28,7 @@ class Cashalot
      * Запрос состояния ПРРО
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function TransactionsRegistrarState($command)
+    public function TransactionsRegistrarState()
     {
         $response = $this->guz->post($this->url,
             [
@@ -36,7 +36,7 @@ class Cashalot
                     'headers' => [
                         'Content-Type: application/json; charset=UTF-8”',
                     ],
-                    'Command' => $command,
+                    'Command' => 'TransactionsRegistrarState',
                     'NumFiscal' => config('cashalot.numfiscal'),
                     'Certificate' => config('cashalot.certificate'),
                     'PrivateKey' => config('cashalot.key'),
@@ -61,7 +61,7 @@ class Cashalot
      * Запрос доступных объектов
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function Objects($command)
+    public function Objects()
     {
         $response = $this->guz->post($this->url,
             [
@@ -69,7 +69,41 @@ class Cashalot
                     'headers' => [
                         'Content-Type: application/json; charset=UTF-8”',
                     ],
-                    'Command' => $command,
+                    'Command' => 'Objects',
+                    'NumFiscal' => config('cashalot.numfiscal'),
+                    'Certificate' => config('cashalot.certificate'),
+                    'PrivateKey' => config('cashalot.key'),
+                    'Password' => config('cashalot.password'),
+
+                ]]);
+
+        $d = $response->getBody()->getContents();
+
+        $f = json_decode($d, true);
+
+        if ($f['ErrorMessage'] == null) {
+
+            echo $f;
+            Log::info('success');
+
+        } else {
+            Log::warning($f['ErrorMessage']);
+        }
+    }
+
+    /**
+     * Открытие смены
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function OpenShift()
+    {
+        $response = $this->guz->post($this->url,
+            [
+                'json' => [
+                    'headers' => [
+                        'Content-Type: application/json; charset=UTF-8”',
+                    ],
+                    'Command' => 'OpenShift',
                     'NumFiscal' => config('cashalot.numfiscal'),
                     'Certificate' => config('cashalot.certificate'),
                     'PrivateKey' => config('cashalot.key'),
@@ -93,7 +127,7 @@ class Cashalot
      * Открытие смены
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function OpenShift($command)
+    public function CloseShift()
     {
         $response = $this->guz->post($this->url,
             [
@@ -101,39 +135,7 @@ class Cashalot
                     'headers' => [
                         'Content-Type: application/json; charset=UTF-8”',
                     ],
-                    'Command' => $command,
-                    'NumFiscal' => config('cashalot.numfiscal'),
-                    'Certificate' => config('cashalot.certificate'),
-                    'PrivateKey' => config('cashalot.key'),
-                    'Password' => config('cashalot.password'),
-
-                ]]);
-
-        $d = $response->getBody()->getContents();
-
-        $f = json_decode($d, true);
-
-        if ($f['ErrorMessage'] == null) {
-            Log::info('success');
-
-        } else {
-            Log::warning($f['ErrorMessage']);
-        }
-    }
-
-    /**
-     * Открытие смены
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function CloseShift($command)
-    {
-        $response = $this->guz->post($this->url,
-            [
-                'json' => [
-                    'headers' => [
-                        'Content-Type: application/json; charset=UTF-8”',
-                    ],
-                    'Command' => $command,
+                    'Command' => 'CloseShift',
                     'NumFiscal' => config('cashalot.numfiscal'),
                     'Certificate' => config('cashalot.certificate'),
                     'PrivateKey' => config('cashalot.key'),
@@ -158,7 +160,7 @@ class Cashalot
      * Z отчет
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function RegisterZRep($command)
+    public function RegisterZRep()
     {
         $response = $this->guz->post($this->url,
             [
@@ -166,7 +168,7 @@ class Cashalot
                     'headers' => [
                         'Content-Type: application/json; charset=UTF-8”',
                     ],
-                    'Command' => $command,
+                    'Command' => 'RegisterZRep',
                     'NumFiscal' => config('cashalot.numfiscal'),
                     'Certificate' => config('cashalot.certificate'),
                     'PrivateKey' => config('cashalot.key'),
@@ -192,7 +194,7 @@ class Cashalot
      * Регистрация ЧЕКА по банковской карте
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function RegisterCheck($command, $check)
+    public function RegisterCheck($check)
     {
         $response = $this->guz->post($this->url,
             [
@@ -200,7 +202,7 @@ class Cashalot
                     'headers' => [
                         'Content-Type: application/json; charset=UTF-8”',
                     ],
-                    'Command' => $command,
+                    'Command' => 'RegisterCheck',
                     'NumFiscal' => config('cashalot.numfiscal'),
                     'Certificate' => config('cashalot.certificate'),
                     'PrivateKey' => config('cashalot.key'),
@@ -212,6 +214,8 @@ class Cashalot
         $d = $response->getBody()->getContents();
 
         $f = json_decode($d, true);
+
+
 
         if ($f['ErrorMessage'] == null) {
             Log::info('success');
