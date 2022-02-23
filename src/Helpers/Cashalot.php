@@ -215,8 +215,6 @@ class Cashalot
 
         $f = json_decode($d, true);
 
-
-
         if ($f['ErrorMessage'] == null) {
             Log::info('success');
 
