@@ -49,6 +49,7 @@ class Cashalot
         $f = json_decode($d, true);
 
         if ($f['ErrorMessage'] == null) {
+            echo $f;
             Log::info('success');
 
         } else {
