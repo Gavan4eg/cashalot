@@ -1,5 +1,7 @@
-# Cashalot API
+# Cashalot API Laravel
+#### WEB API для ПРРО Cashalot (Украина)
 
+###  php > 7.2, Laravel > 6
 
 ## Установка
 ``` 
